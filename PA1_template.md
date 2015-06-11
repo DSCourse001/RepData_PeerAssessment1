@@ -49,6 +49,8 @@ For this part of the assignment, you can ignore the missing values in the datase
 1.  If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
 1.  Calculate and report the mean and median of the total number of steps taken per day
 
+Using power of "data.table" and "dplyr" package to answer on question. After that plotting frequency histogram of total number of steps taken each day. Mean and Median represented on the graph as red and green line correspondingly. 
+
 
 ```r
 require(data.table)
@@ -86,6 +88,8 @@ rm(data1,dataGroup1)
 1.  Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 2.  Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
+Again using "data.table" and "dplyr" packages to deal with data and plotting the graph. Max value of steps and corresponding interval value shown in legend.
+
 
 ```r
 require(data.table)
@@ -122,7 +126,10 @@ rm(data2,dataGroup2)
 
 ## Imputing missing values
 Note that there are a number of days/intervals where there are missing values (coded as NA). The presence of missing days may introduce bias into some calculations or summaries of the data.
+
 1.  Calculate and report the total number of missing values in the dataset (i.e. the total number of rows with NAs)
+
+Just doing that.
 
 
 ```r
@@ -137,6 +144,9 @@ totalMissingValues
 
 2.  Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 3.  Create a new dataset that is equal to the original dataset but with the missing data filled in.
+
+Filling NA values in steps with mean of 5 minute interval. After that grouping data set by "date" and getting the sum of steps using "dplyr" package.
+
 
 
 ```r
@@ -169,6 +179,8 @@ dataGroup3 <- data3 %>%
 
 4.  Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
+Now we can see that Mean and Median Value is the same: red line and green dotted line.
+
 
 ```r
 with(dataGroup3,{
@@ -199,11 +211,13 @@ rm(data3,dataGroup3)
 ## Are there differences in activity patterns between weekdays and weekends?
 1.  Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
+Creating "data.table" data set with factor values. 
+
 
 ```r
 require(data.table)
 data4<-data
-data4[,daytype:=factor(ifelse(wday(date) %in% c(1:5),"weekday","weekend"))]
+data4[,daytype:=factor(ifelse(wday(date) %in% c(2:6),"weekday","weekend"))]
 ```
 
 ```
@@ -214,14 +228,16 @@ data4[,daytype:=factor(ifelse(wday(date) %in% c(1:5),"weekday","weekend"))]
 ##     4: 0.1509434 2012-10-01       15 weekday
 ##     5: 0.0754717 2012-10-01       20 weekday
 ##    ---                                      
-## 17564: 4.6981132 2012-11-30     2335 weekend
-## 17565: 3.3018868 2012-11-30     2340 weekend
-## 17566: 0.6415094 2012-11-30     2345 weekend
-## 17567: 0.2264151 2012-11-30     2350 weekend
-## 17568: 1.0754717 2012-11-30     2355 weekend
+## 17564: 4.6981132 2012-11-30     2335 weekday
+## 17565: 3.3018868 2012-11-30     2340 weekday
+## 17566: 0.6415094 2012-11-30     2345 weekday
+## 17567: 0.2264151 2012-11-30     2350 weekday
+## 17568: 1.0754717 2012-11-30     2355 weekday
 ```
 
 2.  Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+
+Grouping data set by interval and factor value and after that calculating the mean.
 
 
 ```r
@@ -235,8 +251,8 @@ require(lattice)
 
 ```r
 dataGroup4 <- data4 %>%
-                group_by(interval) %>%
-                    summarise(daytype=daytype,steps=mean(steps,na.rm=T))
+                group_by(interval,daytype) %>%
+                    summarise(steps=mean(steps,na.rm=T))
 xyplot(steps ~ interval | factor(daytype), data = dataGroup4, aspect = 1/2, type = "l",ylab="Number of steps")
 ```
 
