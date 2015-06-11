@@ -1,8 +1,10 @@
 # Reproducible Research: Peer Assessment 1
 
+First of all we seting up knitr parameters to store plot pictures in "./figure/" directory.
+Acctually this is a system directory, but task for this assignment tell us: "always use ```echo = TRUE```".
 
 ```r
-library(knitr)
+require(knitr)
 opts_knit$set(root.dir = ".")
 opts_chunk$set(fig.path = "./figure/",dev="png") 
 ```
@@ -49,7 +51,7 @@ For this part of the assignment, you can ignore the missing values in the datase
 1.  If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
 1.  Calculate and report the mean and median of the total number of steps taken per day
 
-Using power of "data.table" and "dplyr" package to answer on question. After that plotting frequency histogram of total number of steps taken each day. Mean and Median represented on the graph as red and green line correspondingly. 
+Using power of ```data.table``` and ```dplyr``` package to answer on question. After that plotting frequency histogram of total number of steps taken each day. Mean and Median represented on the graph as red and green line correspondingly. 
 
 
 ```r
@@ -85,10 +87,10 @@ rm(data1,dataGroup1)
 ```
 
 ## What is the average daily activity pattern?
-1.  Make a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
+1.  Make a time series plot (i.e. ```type = "l"```) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all days (y-axis)
 2.  Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
-Again using "data.table" and "dplyr" packages to deal with data and plotting the graph. Max value of steps and corresponding interval value shown in legend.
+Again using ```data.table``` and ```dplyr``` packages to deal with data and plotting the graph. Max value of ```steps``` and corresponding ```interval``` value shown in legend.
 
 
 ```r
@@ -134,18 +136,13 @@ Just doing that.
 
 ```r
 totalMissingValues<-sum(!complete.cases(data))
-totalMissingValues
 ```
-
-```
-## [1] 2304
-```
-
+The value of total number of missing values in the data set is **2304**.
 
 2.  Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
 3.  Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
-Filling NA values in steps with mean of 5 minute interval. After that grouping data set by "date" and getting the sum of steps using "dplyr" package.
+Filling NA values in ```steps``` with mean of 5 minute ```interval```. After that grouping data set by ```date``` and getting the sum of ```steps``` using ```dplyr``` package.
 
 
 
@@ -211,7 +208,7 @@ rm(data3,dataGroup3)
 ## Are there differences in activity patterns between weekdays and weekends?
 1.  Create a new factor variable in the dataset with two levels – “weekday” and “weekend” indicating whether a given date is a weekday or weekend day.
 
-Creating "data.table" data set with factor values. 
+Creating ```data.table``` data set with ```factor``` values. 
 
 
 ```r
@@ -235,9 +232,9 @@ data4[,daytype:=factor(ifelse(wday(date) %in% c(2:6),"weekday","weekend"))]
 ## 17568: 1.0754717 2012-11-30     2355 weekday
 ```
 
-2.  Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
+2.  Make a panel plot containing a time series plot (i.e. ```type = "l"```) of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
-Grouping data set by interval and factor value and after that calculating the mean.
+Grouping data set by ```interval``` and ```factor``` value and after that calculating the ```mean```.
 
 
 ```r
