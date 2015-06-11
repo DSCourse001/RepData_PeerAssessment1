@@ -8,7 +8,7 @@ output:
 ```{r setup, cache=FALSE, include=TRUE,message=FALSE}
 library(knitr)
 opts_knit$set(root.dir = ".")
-opts_chunk$set(fig.path = "./figure/",dev="png")
+opts_chunk$set(fig.path = "./figure/",dev="png") 
 ```
 
 

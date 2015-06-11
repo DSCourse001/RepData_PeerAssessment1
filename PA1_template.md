@@ -4,7 +4,7 @@
 ```r
 library(knitr)
 opts_knit$set(root.dir = ".")
-opts_chunk$set(fig.path = "./figure/",dev="png")
+opts_chunk$set(fig.path = "./figure/",dev="png") 
 ```
 
 
